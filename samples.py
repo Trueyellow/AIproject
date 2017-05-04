@@ -1,13 +1,9 @@
 # Rutger Introduction To Artificial Intelligence (CS 520) Final project
 # samples.py
 # Date: 04/07/2017
-# Created by Kaixiang Huang
+# Created by Kaixiang Huang, Yehan Wang
 # Based on the  http://inst.eecs.berkeley.edu/~cs188/sp11/projects/classification/samples.py
-
-
-
 import time
-import zipfile
 import os
 
 class Datum:
@@ -57,12 +53,11 @@ def loadDataFile(filename, n, width, height):
 
 
 def readlines(filename):
-    "Opens a file or reads it from the zip archive data.zip"
+    """
+    readline function to help use extract line data from file
+    """
     if (os.path.exists(filename)):
         return [l[:-1] for l in open(filename).readlines()]
-    else:
-        z = zipfile.ZipFile('data.zip')
-        return z.read(filename).split('\n')
 
 
 def loadLabelsFile(filename, n):
@@ -116,33 +111,18 @@ def convertToInteger(data):
     else:
         return list(map(convertToInteger, data))
 
-#Time counter for train function
 
+# Time counter for train function
 def timecounter(func):
     def wrapper(*args):
         start_time = time.time()
         train = func(*args)
         end_time = time.time()
-        print('----------------The {} step tooks {} seconds to run'.format(func.__name__, end_time - start_time))
+        print('----------------The {} step tooks {} seconds to run--------------------------------'
+              '--'.format(func.__name__, end_time - start_time))
         return train
     return wrapper
 
-# Testing
-
-def _test():
-    n = 10
-    items = loadDataFile("facedata/facedatatrain", n,60,70)
-    labels = loadLabelsFile("facedata/facedatatrainlabels", n)
-    # items = loadDataFile("digitdata/trainingimages", n, 28, 28)
-    # labels = loadLabelsFile("digitdata/traininglabels", n)
-    for i in range(10):
-        print(items[i])
-        print(items[i].pixels)
-        print(labels)
-        print(items[i].height)
-        print(items[i].width)
-        print(dir(items[i]))
-        print(items[i].getPixels())
 
 # calculate hit_rate and print result
 def evaluate(prediction, labels):
@@ -151,8 +131,5 @@ def evaluate(prediction, labels):
         if prediction[i] == labels[i]:
             correct += 1
     hit_rate = float(correct)/len(labels)
-
-    print('----------------The total number of test data is {}, and the prediction accuracy is {}'.format(len(labels),hit_rate))
-
-if __name__ == "__main__":
-    _test()
+    print('----------------The total number of test data is {}, and the '
+          'prediction accuracy is {}---------------------\n\n\n'.format(len(labels),hit_rate))

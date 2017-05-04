@@ -5,13 +5,12 @@
 # Created by Kaixiang Huang, Yehan Wang
 
 from Neural_Network import NeuralNetworkClassifier
-from Naive_Bayesian import NaiveBayesClassifier
-from Naive_Bayesian_cycle import NaiveBayesClassifierDigit
+from Naive_Bayesian_face import NaiveBayesClassifier
+from Naive_Bayesian_digit import NaiveBayesClassifierDigit
 from Perceptron import PerceptronClassifier
 import numpy as np
 import Feature
 from samples import evaluate, loadDataFile, loadLabelsFile
-import random
 
 fraction = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 number_of_train_data_digit = 5000
@@ -83,20 +82,25 @@ if __name__ == "__main__":
         face_train_data, face_train_label = Random_choice(fra, face_train_datas, face_train_labels)
 
         print("\n----------------This is NaiveBayes classifier of digit with {} of train data, which we extract "
-              "extra feature -- the number of closure cycles ----".format(fra))
+              "extra feature -- the number of closure cycles ---------------------------".format(fra))
         NaiveBayes("digit", digit_train_data, digit_train_label, digit_test_datas, digit_test_labels)
-        print("\n----------------This is NaiveBayes classifier of face with {} of train data---------".format(fra))
+        print("\n----------------This is NaiveBayes classifier of face with {} of train data"
+              "-------------------------".format(fra))
         NaiveBayes("face", face_train_data, face_train_label, face_test_datas, face_test_labels)
 
-        print("\n----------------This is Percepton classifier of digit with {} of train data---------".format(fra))
+        print("\n----------------This is Percepton classifier of digit with {} of train data"
+              "-------------------------".format(fra))
         Percepton(digit_train_data, digit_train_label, digit_test_datas, digit_test_labels)
-        print("\n----------------This is Percepton classifier of face with {} of train data---------".format(fra))
+        print("\n----------------This is Percepton classifier of face with {} of train data"
+              "--------------------------".format(fra))
         Percepton(face_train_data, face_train_label, face_test_datas, face_test_labels)
 
-        print("\n----------------This is NeuralNetwork classifier of digit with {} of train data---------".format(fra))
+        print("\n----------------This is NeuralNetwork classifier of digit with {} of train data"
+              "---------------------------".format(fra))
         NeuralNetwork("digit", digit_train_data, digit_train_label, digit_validation_data,
                                 digit_validation_label, digit_test_datas, digit_test_labels)
 
-        print("\n----------------This is NeuralNetwork classifier of face with {} of train data---------".format(fra))
+        print("\n----------------This is NeuralNetwork classifier of face with {} of train data"
+              "---------------------------".format(fra))
         NeuralNetwork("face", face_train_data, face_train_label, face_validation_datas,
                                 face_validation_labels, face_test_datas, face_test_labels)

@@ -1,16 +1,13 @@
 # Rutger Introduction To Artificial Intelligence (CS 520) Final project
 # Perceptron.py
 # Date: 04/09/2017
-# Created by Kaixiang Huang
+# Created by Kaixiang Huang, Yehan Wang
 # Based on the  http://inst.eecs.berkeley.edu/~cs188/sp11/projects/classification/perceptron.py
-
-
 # Perceptron implementation
 
-from samples import evaluate
 import numpy as np
 import Feature
-from samples import evaluate, timecounter, loadDataFile, loadLabelsFile
+from samples import timecounter
 
 
 class PerceptronClassifier:

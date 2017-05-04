@@ -4,8 +4,7 @@
 # Created by Kaixiang Huang, Yehan Wang
 
 import numpy as np
-import Feature
-from samples import evaluate, timecounter, loadDataFile, loadLabelsFile
+from samples import timecounter
 
 
 relu = lambda x: x * (x > 0)
@@ -33,8 +32,7 @@ class NeuralNetworkClassifier:
         #
         #     except IOError or ValueError:
         #         print("There is no stored weights and bias!")
-
-         # -------------------- load trained model part --------------------------------
+        # -------------------- load trained model part --------------------------------
 
     def model_generate(self, input_size, output_size, hidden_size):
         # the initialize of Neural Network Classifier
@@ -120,7 +118,7 @@ class NeuralNetworkClassifier:
 
     @timecounter
     def train(self, input_data, input_labels, validation_accuracy_test_data,
-              validation_accuracy_test_label, output_size=10,  hidden_size=50, learning_rate=0.05, epoch=5000, validation_iters=500):
+              validation_accuracy_test_label, output_size=10,  hidden_size=50, learning_rate=0.05, epoch=5000, validation_iters=1000):
         if self.data_type == "face":
             output_size = 2
         input_size = input_data.shape[1]
@@ -184,7 +182,7 @@ class NeuralNetworkClassifier:
                         final_parameter[parameter] = model[parameter].copy()
 
                 print('Finished epoch {} / {}: Train_Loss {}, train_accuracy: {}, validation_accuracy: {}, '
-                      'leaning rate {}\n'
+                      'leaning rate {}'
                       .format(iters, epoch, loss, train_accuracy, validation_accuracy, learning_rate))
 
                 print('Finished optimization. best validation accuracy: {}'.format(best_acc))
