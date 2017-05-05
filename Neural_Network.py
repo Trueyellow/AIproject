@@ -159,7 +159,7 @@ class NeuralNetworkClassifier:
             learning_rate *= learning_rate_decay
             iters += 1
 
-            if (iters % validation_iters) == 0 or iters == epoch:
+            if (iters % validation_iters) == 0 or iters == epoch or iters == 0:
 
                 train_accuracy_test_data = input_data
                 train_accuracy_test_label = input_labels
