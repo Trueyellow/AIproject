@@ -78,6 +78,7 @@ class NeuralNetworkClassifier:
 
         # if labels is none, means we are doing some prediction that we can just use hidden_layer2 as our final scores to
         # do prediction
+
         if input_labels is None:
             return hidden_layer2
 
@@ -117,8 +118,8 @@ class NeuralNetworkClassifier:
         return loss, back_gradient
 
     @timecounter
-    def train(self, input_data, input_labels, validation_accuracy_test_data,
-              validation_accuracy_test_label, output_size=10,  hidden_size=50, learning_rate=0.05, epoch=5000, validation_iters=1000):
+    def train(self, input_data, input_labels, validation_test_data,
+              validation_test_label, output_size=10,  hidden_size=50, learning_rate=0.05, epoch=5000, validation_iters=1000):
         if self.data_type == "face":
             output_size = 2
         input_size = input_data.shape[1]
@@ -170,10 +171,10 @@ class NeuralNetworkClassifier:
                 train_accuracy = np.mean(train_prediction == train_accuracy_test_label)
                 train_acc_history_table.append(train_accuracy)
 
-                validation_score = self.loss_cal(validation_accuracy_test_data, model)
+                validation_score = self.loss_cal(validation_test_data, model)
 
                 validation_prediction = np.argmax(validation_score, axis=1)
-                validation_accuracy = np.mean(validation_prediction == validation_accuracy_test_label)
+                validation_accuracy = np.mean(validation_prediction == validation_test_label)
                 val_acc_history_table.append(validation_accuracy)
 
                 if validation_accuracy >= best_acc:
@@ -186,7 +187,6 @@ class NeuralNetworkClassifier:
                       .format(iters, epoch, loss, train_accuracy, validation_accuracy, learning_rate))
 
                 print('Finished optimization. best validation accuracy: {}'.format(best_acc))
-
 
         # Save the best model
         if self.data_type == "digit":
@@ -204,24 +204,3 @@ class NeuralNetworkClassifier:
         train_score = self.loss_cal(train_accuracy_test_data, self.learning_para_store)
         train_prediction = np.argmax(train_score, axis=1)
         return train_prediction
-
-# n = 5000
-# items = loadDataFile("digitdata/trainingimages", n, 28, 28)
-# input_datas = Feature.flatten_feature(items, 0)
-# input_labels = loadLabelsFile("digitdata/traininglabels", n)
-# items = loadDataFile("digitdata/validationimages", 1000, 28, 28)
-# validation_datas = Feature.flatten_feature(items, 0)
-# validation_labels = loadLabelsFile("digitdata/validationlabels", 1000)
-# NN = NeuralNetworkClassifier("digit")
-#
-# # items = loadDataFile("facedata/facedatatrain", n, 60, 70)
-# # input_datas = Feature.flatten_feature(items, 0)
-# # input_labels = loadLabelsFile("facedata/facedatatrainlabels", n)
-# #
-# # validation_items = loadDataFile("facedata/facedatatest", 50, 60, 70)
-# # validation_datas = Feature.flatten_feature(validation_items, 0)
-# # validation_labels = loadLabelsFile("facedata/facedatatestlabels", 50)
-# # NN = NeuralNetworkClassifier("face")
-#
-# NN.train(input_datas, input_labels, validation_datas, validation_labels)
-# # NN.prediction(validation_data, validation_label)

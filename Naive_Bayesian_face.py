@@ -11,20 +11,14 @@ import collections
 import Feature
 from samples import timecounter, loadDataFile, loadLabelsFile
 
-class NaiveBayesClassifier():
+
+class NaiveBayesClassifier:
 
     def __init__(self, k):
         self.k = k  # this is the smoothing parameter
         self.y_prior = {}
         self.y_Distribution = {}
         self.conditional_probabilities = {}
-
-    def setSmoothing(self, k):
-        """
-        This is used by the main method to change the smoothing parameter before training.
-        Do not modify this method.
-        """
-        self.k = k
 
     # function to calculate Prior Distribution -- P(Y) = C(Y)/n
     def calculate_prior_distribution(self, labels):
@@ -74,6 +68,9 @@ class NaiveBayesClassifier():
 
     @timecounter
     def train(self, data, labels):
+        """
+        learning step for Naive Bayes, calculate probabilities from train data
+        """
         self.calculate_prior_distribution(labels)
         self.calculate_conditional_probabilities(data, labels)
 
@@ -89,21 +86,3 @@ class NaiveBayesClassifier():
             self.posteriors.append(posterior)
         return guesses
 
-# n = 5000
-# # items = loadDataFile("digitdata/trainingimages", n, 28, 28)
-# # labels = loadLabelsFile("digitdata/traininglabels", n)
-# # test_items = loadDataFile("digitdata/testimages", 500, 28, 28)
-# # test_labels = loadLabelsFile("digitdata/testlabels", 500)
-# items = loadDataFile("facedata/facedatatrain", n, 60, 70)
-# labels = loadLabelsFile("facedata/facedatatrainlabels", n)
-#
-# test_items = loadDataFile("facedata/facedatatest", 301, 60, 70)
-# test_labels = loadLabelsFile("facedata/facedatatestlabels", 301)
-# print(len(items))
-# nb = NaiveBayesClassifier(1)
-# nb.train(items, labels)
-#
-# guess = nb.classify(test_items)
-# evaluate(guess, test_labels)
-# print(guess)
-# print(test_labels)

@@ -11,7 +11,7 @@ import Feature
 from samples import timecounter
 
 
-class NaiveBayesClassifierDigit():
+class NaiveBayesClassifierDigit:
     def __init__(self, k):
         self.k = k  # this is the smoothing parameter
         self.y_prior = {}
@@ -21,28 +21,29 @@ class NaiveBayesClassifierDigit():
     def setSmoothing(self, k):
         """
         This is used by the main method to change the smoothing parameter before training.
-        Do not modify this method.
         """
         self.k = k
 
     # function to calculate Prior Distribution -- P(Y) = C(Y)/n
     def calculate_prior_distribution(self, labels):
-
+        # caclulate prior distribution function
         self.y_Distribution = collections.Counter(labels)
-
         self.y_prior = {}
-
         for i in self.y_Distribution:
             self.y_prior[i] = float(self.y_Distribution[i] / len(labels))
         return self.y_prior
 
-    # Function to calculate Conditional Probabilities-- P( F=fi\Y = y)
+
     def calculate_conditional_probabilities(self, image_data, labels):
+        # Function to calculate Conditional Probabilities-- P( F=fi\Y = y)
         y = list(set(labels))
         c_fi_y = {}
         for i in range(len(labels)):
             label = labels[i]
+            # This cycle_finder function takes way more time than normal feature extraction function that takes our
+            # naive bayes much more time to run
             image_pixel = Feature.cycle_finder(image_data[i])
+
             if label not in c_fi_y:
                 c_fi_y[label] = np.array(image_pixel)
             else:
@@ -69,13 +70,16 @@ class NaiveBayesClassifierDigit():
                                                     dtype=float)
             log_joint_probabilities[label] += np.sum(np.array(image_pixels) * log_conditional_probabilities_0,
                                                     dtype=float)
-            log_joint_probabilities[label] +=log_prior_distribution
+            log_joint_probabilities[label] += log_prior_distribution
 
         return log_joint_probabilities
 
 
     @timecounter
     def train(self, data, labels):
+        """
+        learning step for Naive Bayes, calculate probabilities from train data
+        """
         self.calculate_prior_distribution(labels)
         self.calculate_conditional_probabilities(data, labels)
 

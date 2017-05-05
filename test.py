@@ -69,15 +69,16 @@ def Random_choice(fraction, data, label):
     label = (np.array(label)[train_mask]).tolist()
     return data, label
 
+
 if __name__ == "__main__":
 
-    # --------------Generate Randomly data points with fraction
-    # in case the training step will not be influenced by data's sequence-----------------------------------
+    # --------------Generate Randomly data points with fraction-------------------------------------------
+    # --------in case the training step will not be influenced by data's sequence-----------------------------------
 
     for fra in fraction:
         digit_train_data, digit_train_label = Random_choice(fra, digit_train_datas, digit_train_labels)
         digit_validation_data, digit_validation_label = Random_choice(fra, digit_validation_datas,
-                                                                        digit_validation_labels)
+                                                                      digit_validation_labels)
 
         face_train_data, face_train_label = Random_choice(fra, face_train_datas, face_train_labels)
 

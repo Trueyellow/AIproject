@@ -26,41 +26,39 @@ def basicFeaturesExtract(datum):
     return np.array(features)
 
 
-# to find whether this pixels position is in or out of boundary
+
 def in_boundary(x, y, datum):
+    # to find whether this pixels position is in or out of boundary
     width = datum.width
     height = datum.height
-
     if x >= 0 and y >= 0 and  x < height + 2 and y < width + 2:
         return True
     else:
         return False
 
 
-# find position's available neighbor
+
 def find_neighbors(x, y, datum, visited):
-
+    # find position's available neighbor
     neighbor = []
-
     if in_boundary(x-1, y, datum) and visited[x-1][y] != 1:
         neighbor.append((x-1, y))
-
     if in_boundary(x, y-1, datum) and visited[x][y-1] != 1:
         neighbor.append((x, y-1))
-
     if in_boundary(x+1, y, datum) and visited[x+1][y] != 1:
         neighbor.append((x+1, y))
-
     if in_boundary(x, y+1, datum) and visited[x][y+1] != 1:
         neighbor.append((x, y+1))
-
     return neighbor
 
 
-# find cycle feature of image by DFS, if we can find some zero in image map which can not be searched by DFS, there may
-# be a cycle that subtended by 1, but there are still some mistakes that happened because of image's boundary. So I use
-# zero_padding in image before DFS to get better result
+
 def cycle_finder(datum):
+    """
+    find cycle feature of image by DFS, if we can find some zero in image map which can not be searched by DFS, there may
+    be a cycle that subtended by 1, but there are still some mistakes that happened because of image's boundary. So I use
+    zero_padding in image before DFS to get better result
+    """
     feature = basicFeaturesExtract(datum)
     visited = np.array(feature)
     visited = np.lib.pad(visited, 1, 'constant')
@@ -95,6 +93,9 @@ def cycle_finder(datum):
 
 
 def flatten_feature(image_data, cycle):
+    """
+    flatten input data's feature and prepare it to feed the neural network
+    """
     flatten_features = np.array([])
     for i in range(len(image_data)):
         if cycle == 0:

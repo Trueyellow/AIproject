@@ -11,11 +11,9 @@ from samples import timecounter
 
 
 class PerceptronClassifier:
-
     """
     Perceptron classifier.
     """
-
     def __init__(self):
         self.weights = {}
 
@@ -32,41 +30,24 @@ class PerceptronClassifier:
                 feature = Feature.basicFeaturesExtract(training_data[instance_number])
                 true_label = training_labels[instance_number]
                 prediction_label = self.prediction(feature)
+                # ---- Updata weight for each class ---
                 if prediction_label != true_label:
                     self.weights[true_label] = self.weights[true_label] + feature
                     self.weights[prediction_label] = self.weights[prediction_label] - feature
 
-
-
     def prediction(self, feature):
         scores = {}
+        # use weights of each classes learned from training function to calculate scores of each classes
         for label in self.weights.keys():
             scores[label] = np.sum(self.weights[label]*feature)
+        # find the predicted label with the highest score
         prediction = max(scores, key=(lambda key: scores[key]))
         return prediction
 
     def classify(self, testing_data):
-        predition_result = []
+        prediction_result = []
         for instance in range(len(testing_data)):
             feature = Feature.basicFeaturesExtract(testing_data[instance])
-            predition_result.append(self.prediction(feature))
+            prediction_result.append(self.prediction(feature))
 
-        return predition_result
-
-
-# n = 5000
-# # items = loadDataFile("digitdata/trainingimages", n, 28, 28)
-# # labels = loadLabelsFile("digitdata/traininglabels", n)
-# # test_items = loadDataFile("digitdata/testimages", 50, 28, 28)
-# # test_labels = loadLabelsFile("digitdata/testlabels", 50)
-# items = loadDataFile("facedata/facedatatrain", n, 60, 70)
-# labels = loadLabelsFile("facedata/facedatatrainlabels", n)
-#
-# test_items = loadDataFile("facedata/facedatatest", 150, 60, 70)
-# test_labels = loadLabelsFile("facedata/facedatatestlabels", 150)
-# per = PerceptronClassifier()
-# per.train(items, labels, 200)
-# guess = per.classify(test_items)
-# evaluate(guess, test_labels)
-# print(guess)
-# print(test_labels)
+        return prediction_result
