@@ -76,32 +76,37 @@ if __name__ == "__main__":
     # --------in case the training step will not be influenced by data's sequence-----------------------------------
 
     for fra in fraction:
+        fra_percent = fra*100
+        print("""----------------------------------------------------------------------------------------------
+--------------------------Epoch with {}% of train data  start!-----------------------------
+----------------------------------------------------------------------------------------------\n""".format(fra_percent))
+
         digit_train_data, digit_train_label = Random_choice(fra, digit_train_datas, digit_train_labels)
         digit_validation_data, digit_validation_label = Random_choice(fra, digit_validation_datas,
                                                                       digit_validation_labels)
 
         face_train_data, face_train_label = Random_choice(fra, face_train_datas, face_train_labels)
 
-        print("\n----------------This is NaiveBayes classifier of digit with {} of train data, which we extract "
-              "extra feature -- the number of closure cycles ---------------------------".format(fra))
+        print("\n----------------This is NaiveBayes classifier of digit with {}% of train data, which we extract "
+              "extra feature -- the number of closure cycles ---------------------------".format(fra_percent))
         NaiveBayes("digit", digit_train_data, digit_train_label, digit_test_datas, digit_test_labels)
-        print("\n----------------This is NaiveBayes classifier of face with {} of train data"
-              "-------------------------".format(fra))
+        print("\n----------------This is NaiveBayes classifier of face with {}% of train data"
+              "-------------------------".format(fra_percent))
         NaiveBayes("face", face_train_data, face_train_label, face_test_datas, face_test_labels)
 
-        print("\n----------------This is Percepton classifier of digit with {} of train data"
-              "-------------------------".format(fra))
+        print("\n----------------This is Percepton classifier of digit with {}% of train data"
+              "-------------------------".format(fra_percent))
         Percepton(digit_train_data, digit_train_label, digit_test_datas, digit_test_labels)
-        print("\n----------------This is Percepton classifier of face with {} of train data"
-              "--------------------------".format(fra))
+        print("\n----------------This is Percepton classifier of face with {}% of train data"
+              "--------------------------".format(fra_percent))
         Percepton(face_train_data, face_train_label, face_test_datas, face_test_labels)
 
-        print("\n----------------This is NeuralNetwork classifier of digit with {} of train data"
-              "---------------------------".format(fra))
+        print("\n----------------This is NeuralNetwork classifier of digit with {}% of train data"
+              "---------------------------".format(fra_percent))
         NeuralNetwork("digit", digit_train_data, digit_train_label, digit_validation_data,
                                 digit_validation_label, digit_test_datas, digit_test_labels)
 
-        print("\n----------------This is NeuralNetwork classifier of face with {} of train data"
-              "---------------------------".format(fra))
+        print("\n----------------This is NeuralNetwork classifier of face with {}% of train data"
+              "---------------------------".format(fra_percent))
         NeuralNetwork("face", face_train_data, face_train_label, face_validation_datas,
                                 face_validation_labels, face_test_datas, face_test_labels)
