@@ -118,7 +118,7 @@ def timecounter(func):
         start_time = time.time()
         train = func(*args)
         end_time = time.time()
-        print('----------------The {} step tooks {} seconds to run--------------------------------'
+        print('----------------The {} step took {} seconds to run--------------------------------'
               '--'.format(func.__name__, end_time - start_time))
         return train
     return wrapper
